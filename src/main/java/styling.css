@@ -1,0 +1,9 @@
+.root{
+    -fx-font-size: 12px;
+    -fx-font-family: "Edwardian Script ITC";
+    -fx-background-color: orange;
+}
+
+.header-section{
+    -fx-background-color: blue;
+}
