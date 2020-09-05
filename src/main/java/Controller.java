@@ -1,28 +1,13 @@
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
+import javafx.scene.input.MouseEvent;
 
 public class Controller {
 
-    @FXML
-    private Button btnAddProduct;
-
-    @FXML
-    private Button btnRecordProduction;
-
-    @FXML
-    private ComboBox<?> comboBox;
-
-    @FXML
-    void display(ActionEvent event) {
-        System.out.println(btnAddProduct);
+    public void btnAddProduct(MouseEvent mouseEvent) {
+        System.out.println("added product");
     }
 
-    @FXML
-    void rpDisplay(ActionEvent event) {
-        System.out.println(btnRecordProduction);
+    public void btnRecordProduction(MouseEvent mouseEvent) {
+        System.out.println("recorded production");
     }
-
-
 }
+

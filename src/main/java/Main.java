@@ -4,8 +4,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.awt.*;
-
 public class Main extends Application {
 
     public static void main(String[] args) {
@@ -16,7 +14,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
 
-        Scene scene = new Scene(root, 447, 381);
+        Scene scene = new Scene(root);
         //scene.getStylesheets().add(getClass().getResource("styling.css").toExternalForm());
 
         primaryStage.setScene(scene);
