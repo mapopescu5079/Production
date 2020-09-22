@@ -37,7 +37,7 @@
                                         <Label text="Item" GridPane.rowIndex="2" />
                                     </children>
                                 </GridPane>
-                        <Button layoutX="327.0" layoutY="283.0" mnemonicParsing="false" onMouseClicked="#btnAddProduct" text="Add Product" />
+                        <Button layoutX="327.0" layoutY="283.0" mnemonicParsing="false" onAction="#showProduct" onMouseClicked="#btnAddProduct" text="Add Product" />
                             </children>
                         </AnchorPane>
                     </content>

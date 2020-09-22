@@ -18,20 +18,10 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         Scene scene = new Scene(root);
 
+        primaryStage.setTitle("set better title");
         primaryStage.setScene(scene);
         scene.getStylesheets().add(getClass().getResource("styling.css").toExternalForm());
         primaryStage.show();
-
-        final String JDBC_DRIVER = "org.h2.Driver";
-        final String DB_URL = "jdbc:h2:./res/resDB";
-
-        //  Database credentials
-        final String USER = "";
-        final String PASS = "";
-        Connection conn = null;
-        Statement stmt = null;
-
-
 
 
     }
