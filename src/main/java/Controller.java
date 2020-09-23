@@ -1,12 +1,48 @@
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 import javax.swing.*;
 import java.sql.*;
+import java.util.Scanner;
 
 public class Controller {
+
+    @FXML
+    private TextField tfProductName;
+    public TextField getTfProductName() {
+        return tfProductName;
+    }
+
+    public void setTfProductName(TextField tfProductName) {
+        this.tfProductName = tfProductName;
+    }
+
+    @FXML
+    private TextField tfManufacturer;
+    public TextField getTfManufacturer() {
+        return tfManufacturer;
+    }
+
+    public void setTfManufacturer(TextField tfManufacturer) {
+        this.tfManufacturer = tfManufacturer;
+    }
+
+    @FXML
+    private TextField tfItem;
+    public TextField getTfItem() {
+        return tfItem;
+    }
+
+    public void setTfItem(TextField tfItem) {
+        this.tfItem = tfItem;
+    }
+
+    @FXML
+    private ComboBox<String> cmbQuantity;
 
     @FXML
     void btnAddProduct() {
@@ -25,7 +61,15 @@ public class Controller {
 
     // void showDetails(ActionEvent event){connectToDb();}
 
-    public void initialize(){ }
+    public void initialize(){
+        for (int count = 1; count <= 10; count++){
+            cmbQuantity.getItems().add(String.valueOf(count));
+        }
+        cmbQuantity.setEditable(true);
+        cmbQuantity.getSelectionModel().selectFirst();
+    }
+
+
 
     public void connectToDb(){
 
@@ -38,7 +82,20 @@ public class Controller {
         Connection conn = null;
         Statement stmt = null;
 
+        String make = "";
+        String manufacturer = "";
+        String name = "";
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("enter type: ");
+        make = scanner.next();
+        System.out.println("enter manufacturer: ");
+        manufacturer=scanner.next();
+        System.out.println("enter name: ");
+        name = scanner.next();
+
         try {
+
             // STEP 1: Register JDBC driver
             Class.forName(JDBC_DRIVER);
 
@@ -48,66 +105,37 @@ public class Controller {
             System.out.println("Connection Successful");
 
             //STEP 3: Execute a query
-            System.out.println("inserting products into table");
+            System.out.println("attempting to insert");
+            final String sql = "INSERT INTO Product (type, manufacturer, name)"
+                    + "VALUES (?,?,?)";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, make);
+            ps.setString(2, manufacturer);
+            ps.setString(3, name);
+
+            ps.executeUpdate();
+            System.out.println("insert successful");
+
             stmt = conn.createStatement();
 
-            // String addProduct = btnAddProduct().getText();
+            String showSql = "SELECT * FROM Product";
 
-            String insertSql = "INSERT INTO Product(type, manufacturer, name) "
-            + "VALUES('AUDIO', 'APPLE', 'iPod')";
-
-            stmt.executeUpdate(insertSql);
-
-            insertSql = "INSERT INTO Product(type, manufacturer, name) "
-                    + "VALUES('AUDIO', 'Samsung', 'mp3')";
-
-            stmt.executeUpdate(insertSql);
-            System.out.println("Products inserted into table");
-
-
-         /*   String sql = "SELECT email, first_name, last_name "
-                    + "FROM employees "
-                    + "where employee_id = "+ empId;
-*/
-         /*   ResultSet rs = stmt.executeQuery(sql);
-            // while (rs.next()) {
-
-            rs.next();
-            String empEmail = rs.getString(1);
-            String empFirstName = rs.getString(2);
-            String empLastName = rs.getString(3);
-            //System.out.println(empFirstName+" " + empLastName + " " + empEmail + "@tiktok.com");
-
-            lblEmpInfo.setText(empFirstName+" " + empLastName + " " + empEmail + "@tiktok.com");
-*/
-            // }
-
+            ResultSet rs = stmt.executeQuery(showSql);
+            while (rs.next()) {
+                System.out.println(rs.getString(2));
+            }
             // STEP 4: Clean-up environment
              stmt.close();
              conn.close();
         } catch (ClassNotFoundException e) {
-            // Handle errors for JDBC
             e.printStackTrace();
 
-        } catch (Exception e) {
-            // Handle errors for Class.forName
+        } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            // finally block used to clase resources
-            try {
-                if (stmt!=null)
-                    conn.close();
-            } catch (SQLException e){
-                // do nothing
-            }
-            try {
-                if (conn!=null)
-                    conn.close();
-                } catch (SQLException e){
-                e.printStackTrace();
-            } // end finally try
-        } // end try
-        System.out.println("Goodbye");
+        }
+        // insert PRODUCT table here!!!
+        System.out.println("Products Successfully inserted into table");
     } // end connectToDb
 
 } // end Controller
