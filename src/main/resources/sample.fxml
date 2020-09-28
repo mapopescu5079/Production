@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -22,7 +23,7 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <GridPane layoutX="33.0" layoutY="113.0" prefHeight="126.0" prefWidth="242.0">
+                                <GridPane layoutX="33.0" layoutY="113.0" prefHeight="126.0" prefWidth="293.0">
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -38,10 +39,10 @@
                                         <Label text="Item" GridPane.rowIndex="2" />
                               <TextField fx:id="tfProductName" GridPane.columnIndex="1" />
                               <TextField fx:id="tfManufacturer" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <TextField fx:id="tfItem" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <ChoiceBox fx:id="chbItem" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                     </children>
                                 </GridPane>
-                        <Button layoutX="327.0" layoutY="283.0" mnemonicParsing="false" onAction="#showProduct" onMouseClicked="#btnAddProduct" text="Add Product" />
+                        <Button fx:id="btnAddProduct" layoutX="327.0" layoutY="283.0" mnemonicParsing="false" onAction="#btnAddProduct" text="Add Product" />
                             </children>
                         </AnchorPane>
                     </content>
@@ -52,7 +53,7 @@
                             <children>
                                 <ListView layoutX="14.0" layoutY="72.0" prefHeight="269.0" prefWidth="226.0" />
                                 <ComboBox fx:id="cmbQuantity" layoutX="269.0" layoutY="72.0" prefWidth="150.0" />
-                                <Button layoutX="286.0" layoutY="138.0" mnemonicParsing="false" onMouseClicked="#btnRecordProduction" text="Record Production" />
+                                <Button fx:id="btnRecordProduction" layoutX="286.0" layoutY="138.0" mnemonicParsing="false" onAction="#btnRecordProduction" text="Record Production" />
                                 <Label layoutX="85.0" layoutY="46.0" text="Choose Product" />
                                 <Label layoutX="300.0" layoutY="46.0" text="Choose Quantity" />
                             </children></AnchorPane>
