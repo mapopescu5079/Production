@@ -49,9 +49,10 @@ public class Controller {
         cmbQuantity.setEditable(true);
         cmbQuantity.getSelectionModel().selectFirst();
 
-        chbItem.getItems().add("ipod2");
-        chbItem.getItems().add("iwatch");
-        chbItem.getItems().add("irobot");
+        chbItem.getItems().add("Audio");
+        chbItem.getItems().add("Visual");
+        chbItem.getItems().add("AudioMobile");
+        chbItem.getItems().add("VisualMobile");
     }
 
 

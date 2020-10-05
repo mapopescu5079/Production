@@ -10,7 +10,10 @@ import java.sql.Statement;
 public class Main extends Application {
 
     public static void main(String[] args) {
-        launch(args);
+        Product product1 = new Widget("iPod", "Apple", ItemType.AUDIO);
+        System.out.println(product1.toString());
+        Product product2 = new Widget("Zune", "Microsoft", ItemType.AUDIOMOBILE);
+        System.out.println(product2.toString());
     }
 
     @Override
@@ -22,8 +25,8 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         scene.getStylesheets().add(getClass().getResource("styling.css").toExternalForm());
         primaryStage.show();
-
-
     }
+
+
 
 }
