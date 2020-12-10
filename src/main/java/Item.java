@@ -5,8 +5,9 @@ public interface Item {
     String manufacturer = "";
 
     int getId();
+    //void setId();
 
-    String getname();
+    String getName();
     void setName(String name);
 
     String getManufacturer();

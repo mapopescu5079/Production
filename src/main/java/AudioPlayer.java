@@ -1,54 +1,82 @@
-// concrete class
 public class AudioPlayer extends Product implements MultimediaControl{
 
     String supportedAudioFormats;
     String supportedPlaylistFormats;
+//    String name;
+//    String manufacturer;
 
+    public AudioPlayer(String name, String manufacturer){
+        this(name, manufacturer, "audioFormats", "playlistFormats");
+        // should I call again???
+        this.id = id;
+        this.name = name;
+        this.manufacturer = manufacturer;
+    }
+
+    public AudioPlayer(String name, String manufacturer, String supportedAudioFormats, String supportedPlaylistFormats) {
+        super();
+        this.id=Item.id;
+        this.name = name;
+        this.manufacturer = manufacturer;
+        this.type = ItemType.AUDIO;
+        this.supportedAudioFormats = supportedAudioFormats;
+        this.supportedPlaylistFormats = supportedPlaylistFormats;
+    }
 
 
     public String getSupportedAudioFormats(){
         return supportedAudioFormats;
     }
     public void setSupportedAudioFormats(String supportedAudioFormats){
-        supportedAudioFormats = supportedPlaylistFormats;
+        this.supportedAudioFormats = supportedAudioFormats;
     }
 
     public String getSupportedPlaylistFormats(){
         return supportedPlaylistFormats;
     }
     public void setSupportedPlaylistFormats(String supportedPlaylistFormats){
-        supportedPlaylistFormats = supportedPlaylistFormats;
+        this.supportedPlaylistFormats = supportedPlaylistFormats;
     }
 
     @Override
-    public String getname() {
-        return Item.name;
+    public int getId() {
+        return id;
     }
 
     @Override
-    public void setName(String name) {
+    public void setId(int audioID) {
+        this.id=audioID;
+    }
 
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String audioName) {
+        this.name=audioName;
     }
 
     @Override
     public String getManufacturer() {
-        return Item.manufacturer;
+        return manufacturer;
     }
 
     @Override
-    public void setManufacturer(String manufacturer) {
-
+    public void setManufacturer(String audioManufacturer) {
+        this.manufacturer=audioManufacturer;
     }
 
-    public AudioPlayer(String audioPlayerName, String audioPlayerManufacturer, String supportedAudioFormats, String supportedPlaylistFormats) {
-        super();
-        name = audioPlayerName;
-        manufacturer = audioPlayerManufacturer;
-        type = ItemType.AUDIO;
-        this.supportedAudioFormats = supportedAudioFormats;
-        this.supportedPlaylistFormats = supportedPlaylistFormats;
+    @Override
+    public ItemType getType() {
+        return type;
     }
 
+    @Override
+    public void setType(ItemType type) {
+        this.type=type;
+    }
 
     @Override
     public void play() {
@@ -70,7 +98,7 @@ public class AudioPlayer extends Product implements MultimediaControl{
     }
 
     public String toString(){
-        return super.toString() + "Supported Audio Formats: " + supportedAudioFormats + "\n" + "Supported Playlist Formats: " + supportedPlaylistFormats;
+        return super.toString() + "\n" + "Supported Audio Formats: " + supportedAudioFormats + "\n" + "Supported Playlist Formats: " + supportedPlaylistFormats;
     } // end toString()
 
 } // end AudioPlayer

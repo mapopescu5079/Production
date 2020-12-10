@@ -6,27 +6,27 @@ import javafx.stage.Stage;
 
 import java.sql.Connection;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class Main extends Application {
 
-    public static void main(String[] args) {
-        Product product1 = new Widget("iPod", "Apple", ItemType.AUDIO);
-        System.out.println(product1.toString());
-        Product product2 = new Widget("Zune", "Microsoft", ItemType.AUDIOMOBILE);
-        System.out.println(product2.toString());
-    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         Scene scene = new Scene(root);
 
-        primaryStage.setTitle("set better title");
+        primaryStage.setTitle("The election was totally rigged");
         primaryStage.setScene(scene);
         scene.getStylesheets().add(getClass().getResource("styling.css").toExternalForm());
         primaryStage.show();
     }
 
+    public static void main(String[] args) {
+        //Application.launch();
+        launch(args);
+    }
 
 
-}
+} // end Main
