@@ -1,3 +1,8 @@
+/**
+ * All products will contain this classes parameters
+ *
+ * @author Matthew Popescu
+ */
 public class Product implements Item {
   int id;
   ItemType type;
@@ -6,12 +11,24 @@ public class Product implements Item {
 
   Product() {}
 
+  /**
+   * @param name: String
+   * @param manufacturer: String
+   * @param type: ItemType
+   * @author Matthew Popescu
+   */
   public Product(String name, String manufacturer, ItemType type) {
     this.type = type;
     this.name = name;
     this.manufacturer = manufacturer;
   } // end constructor
 
+  /**
+   * @param id: int
+   * @param name: String
+   * @param manufacturer: String
+   * @param type: ItemType
+   */
   public Product(int id, String name, String manufacturer, ItemType type) {
     this.id = id;
     this.type = type;

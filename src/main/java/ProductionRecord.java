@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ProductionRecord {
-  int productionNumber;
-  int productID;
-  String serialNumber;
-  Date dateProduced;
+  private int productionNumber;
+  private int productID;
+  private String serialNumber;
+  private Date dateProduced;
 
   // ArrayList<ProductionRecord> list = new ArrayList<ProductionRecord>();
 
@@ -18,11 +18,9 @@ public class ProductionRecord {
    * @author Matthew Popescu
    */
   public ProductionRecord(int productID) {
-    productionNumber = 0;
+    this.productID = productID;
     serialNumber = "0";
     this.dateProduced = new Date();
-    Product newProduct;
-    int itemCount;
   }
 
   /**

@@ -19,26 +19,14 @@ public class Controller {
   Statement statement = null;
   ResultSet resultSet = null;
 
-  String productName;
-  String item; // getValue() ?????
-  String productManufacturer;
-
-  int productionNum;
-  int productID;
-  char serialNum;
-  Date dateProduced;
-
   public ObservableList<Product> productLine;
-  //    public ArrayList<ProductionRecord> productionRun;
-  //    public ArrayList<ProductionRecord> productionRunRecord;
-  public ArrayList<ProductionRecord> productionRecordsTest = new ArrayList<>();
 
   // Product Line tab
   @FXML private TextField tfProductName;
 
   @FXML private TextField tfManufacturer;
 
-  @FXML private ChoiceBox<String> chbItem;
+  @FXML private ChoiceBox<ItemType> chbItem;
 
   @FXML private Button btnAddProduct;
 
@@ -52,9 +40,9 @@ public class Controller {
   @FXML
   void btnAddProduct(ActionEvent event) throws SQLException {
 
-    productName = tfProductName.getText();
-    productManufacturer = tfManufacturer.getText();
-    item = chbItem.getValue();
+    String productName = tfProductName.getText();
+    String productManufacturer = tfManufacturer.getText();
+    ItemType item = chbItem.getSelectionModel().getSelectedItem();
 
     connectToDB();
 
@@ -62,7 +50,7 @@ public class Controller {
     final String sql = "INSERT INTO Product (type, manufacturer, name)" + "VALUES (?, ?, ?)";
 
     PreparedStatement ps = connection.prepareStatement(sql);
-    ps.setString(1, item);
+    ps.setString(1, item.code);
     ps.setString(2, productManufacturer);
     ps.setString(3, productName);
     ps.executeUpdate();
@@ -97,13 +85,7 @@ public class Controller {
    */
   @FXML
   public void btnRecordProduction(ActionEvent event) throws SQLException {
-    // create sql date object for insertion into DB
-    Calendar calendar = Calendar.getInstance();
-    // Timestamp for ProductionRecord object
-    //        java.sql.Timestamp timestamp = new java.sql.Timestamp(calendar.getTime().getTime());
-    java.sql.Date startDate = new java.sql.Date(calendar.getTime().getTime());
 
-    ;
 
     // get product from product line listview
     Product produce = new Product();
@@ -113,25 +95,14 @@ public class Controller {
 
     // create arrayList of ProductionRecord objects
     ArrayList<ProductionRecord> productionRun = new ArrayList<>();
-    ProductionRecord recordedProduce = new ProductionRecord(productID);
-    ItemType type = produce.getType();
-    String manufacturer = produce.getManufacturer();
-    Date date = new Date();
-    Timestamp timestamp = new Timestamp(date.getTime());
-    //        java.sql.Timestamp timestamp = new java.sql.Timestamp(calendar.getTime().getTime());
-    //        String name = beingRecorded.getName();
-    //        int productID = b.getProductID();
-    //        String serialNum = newProduct.getSerialNum();
+    ProductionRecord recordedProduce = new ProductionRecord(produce.getId());
+
     productionRun.add(recordedProduce);
-
     // send the productionRun to addToProductionDB method.  (Tip: use TimeStamp object for date!!!)
-    //        addToProductionDB(productionRun);
-    //        addToProductionDB(productionRunRecords);
-
     addToProductionDB(productionRun);
 
-    loadProductionLog();
-    showProduction();
+//    loadProductionLog();
+//    showProduction();
   } // end btnRecordProduction()
 
   @FXML private ComboBox<String> cmbQuantity;
@@ -157,10 +128,7 @@ public class Controller {
     cmbQuantity.setEditable(true);
     cmbQuantity.getSelectionModel().selectFirst();
 
-    chbItem.getItems().add("Audio");
-    chbItem.getItems().add("Visual");
-    chbItem.getItems().add("AudioMobile");
-    chbItem.getItems().add("VisualMobile");
+    chbItem.getItems().addAll(ItemType.values());
 
     connectToDB();
 
@@ -252,35 +220,21 @@ public class Controller {
   public void addToProductionDB(ArrayList<ProductionRecord> productionRun) throws SQLException {
     // STEP 3: Execute a query
     connectToDB();
-
-    ProductionRecord productionRecord = new ProductionRecord(productID);
-
     String sql =
-        "INSERT INTO ProductionRecord (PRODUCTION_NUM, PRODUCT_ID, SERIAL_NUM, DATE_PRODUCED)"
-            + "VALUES (?,?,?,?)";
-
-    statement.executeUpdate(sql);
-    productionRun.add(productionRecord);
-    taProductionLog.setText(productionRecord.toString());
-
-    statement.close();
-    connection.close();
-
-    //    for (int i = 0; i < productionRun.size(); i++) {
-    //      ps.setInt(1, Integer.parseInt(productionRun.get(i).toString()));
-    //      ps.setInt(2, Integer.parseInt(productionRun.get(productID).toString()));
-    //      ps.setString(3, productionRun.get(serialNum).toString());
-    //      ps.setDate(4, null);
-    //      statement.executeUpdate(sql);
-    //    }
-
-    //            while (resultSet.next()) {
-    //              ps.setInt(1, Integer.parseInt(productionRun.get(productionNum).toString()));
-    //              ps.setInt(2, Integer.parseInt(productionRun.get(productID).toString()));
-    //              ps.setString(3, productionRun.get(serialNum).toString());
-    //              ps.setDate(4, null);
-    //              statement.executeUpdate(sql);
-    //            } // end while
+        "INSERT INTO ProductionRecord (PRODUCT_ID, SERIAL_NUM, DATE_PRODUCED)"
+            + "VALUES (?,?,?)";
+    PreparedStatement ps = connection.prepareStatement(sql);
+    Timestamp timestamp;
+    System.out.println(productionRun.size());
+    for (ProductionRecord pr:productionRun) {
+          timestamp = new Timestamp(pr.getProdDate().getTime());
+          ps.setInt(1, pr.getProductID());
+      System.out.println(pr.getProductID());
+          ps.setString(2, pr.getSerialNum());
+          ps.setTimestamp(3, timestamp);
+          statement.executeUpdate(sql);
+        }
+        ps.close();
   } // end addToProductionDB()
 
   /**
