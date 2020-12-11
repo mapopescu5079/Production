@@ -1,18 +1,17 @@
 public interface Item {
 
-    int id=0;
-    String name = "";
-    String manufacturer = "";
+  int id = 0;
+  String name = "";
+  String manufacturer = "";
 
-    int getId();
-    //void setId();
+  int getId();
+  // void setId();
 
-    String getName();
-    void setName(String name);
+  String getName();
 
-    String getManufacturer();
-    void setManufacturer(String manufacturer);
+  void setName(String name);
 
+  String getManufacturer();
 
-
+  void setManufacturer(String manufacturer);
 }
