@@ -11,7 +11,12 @@ public class ProductionRecord {
 
   // ArrayList<ProductionRecord> list = new ArrayList<ProductionRecord>();
 
-  // called when the user records production from the user interface
+  /**
+   * Called when the user records production from the UI
+   *
+   * @param productID: int
+   * @author Matthew Popescu
+   */
   public ProductionRecord(int productID) {
     productionNumber = 0;
     serialNumber = "0";
@@ -20,9 +25,16 @@ public class ProductionRecord {
     int itemCount;
   }
 
+  /**
+   * Creates serial number for produce.
+   *
+   * @param newProduct: Product
+   * @param itemCount: int
+   * @author Matthew Popescu
+   */
   public ProductionRecord(Product newProduct, int itemCount) {
-    //        newProduct = newProduct;
-    //        itemCount = itemCount;
+    newProduct = newProduct;
+    itemCount = itemCount;
     this.dateProduced = new Date();
     String padded = String.format("%05d", itemCount);
     serialNumber =
@@ -33,20 +45,21 @@ public class ProductionRecord {
     this.dateProduced = new Date();
   } // end overloaded constructor
 
-  // used when creating ProductionRecord objects from the database
+  /**
+   * Used when creating ProductionRecord objects from the database.
+   *
+   * @param productionNumber: int
+   * @param productID: int
+   * @param serialNumber: String
+   * @param dateProduced: Date
+   * @author Matthew Popescu
+   */
   public ProductionRecord(
       int productionNumber, int productID, String serialNumber, Date dateProduced) {
     this.productionNumber = productionNumber;
     this.productID = productID;
     this.serialNumber = serialNumber;
     this.dateProduced = dateProduced;
-
-    // Product productProduced;
-    int itemCount;
-    // countAU, countVI, countAUM, countVIM
-    int countOfItems;
-
-    // toString() ???
   } // end constructor
 
   public int getProductionNum() {

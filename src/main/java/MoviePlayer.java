@@ -3,10 +3,24 @@ public class MoviePlayer extends Product implements MultimediaControl {
   Screen screen;
   MonitorType monitorType;
 
-  public MoviePlayer(String name, String manufacturer) {
-    // this(name, manufacturer, screen, monitorType);
-  }
+  //  /**
+  //   * Called when user inserts product into database using the UI.
+  //   * @param name: String
+  //   * @param manufacturer: String
+  //   */
+  //  public MoviePlayer(String name, String manufacturer) {
+  //     this(name, manufacturer, screen, monitorType);
+  //  }
 
+  /**
+   * Calls parent class constructor. Sets ItemType to VISUAL and gets id.
+   *
+   * @param name: String
+   * @param manufacturer: String
+   * @param screen: Screen
+   * @param monitorType: MonitorType
+   * @author Matthew Popescu
+   */
   public MoviePlayer(String name, String manufacturer, Screen screen, MonitorType monitorType) {
     super();
     this.id = Item.id;

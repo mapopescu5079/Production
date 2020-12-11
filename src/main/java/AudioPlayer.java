@@ -1,3 +1,8 @@
+/**
+ * Concrete class for AudioPlayer objects.
+ *
+ * @author Matthew Popescu
+ */
 public class AudioPlayer extends Product implements MultimediaControl {
 
   String supportedAudioFormats;
@@ -8,13 +13,13 @@ public class AudioPlayer extends Product implements MultimediaControl {
   /**
    * used when user inputs products from the GUI. Calls overloaded constructor to pass parameters.
    *
-   * @param name
-   * @param manufacturer
+   * @param name: String
+   * @param manufacturer: String
+   * @author Matthew Popescu
    */
   public AudioPlayer(String name, String manufacturer) {
     this(name, manufacturer, "audioFormats", "playlistFormats");
-    // should I call again???
-    this.id = id;
+    this.id = Item.id;
     this.name = name;
     this.manufacturer = manufacturer;
   }
@@ -22,10 +27,11 @@ public class AudioPlayer extends Product implements MultimediaControl {
   /**
    * calls parent and sets ItemType to AUDIO
    *
-   * @param name
-   * @param manufacturer
-   * @param supportedAudioFormats
-   * @param supportedPlaylistFormats
+   * @param name: String
+   * @param manufacturer: String
+   * @param supportedAudioFormats: String
+   * @param supportedPlaylistFormats: String
+   * @author Matthew Popescu
    */
   public AudioPlayer(
       String name,
@@ -41,21 +47,21 @@ public class AudioPlayer extends Product implements MultimediaControl {
     this.supportedPlaylistFormats = supportedPlaylistFormats;
   }
 
-  public String getSupportedAudioFormats() {
-    return supportedAudioFormats;
-  }
-
-  public void setSupportedAudioFormats(String supportedAudioFormats) {
-    this.supportedAudioFormats = supportedAudioFormats;
-  }
-
-  public String getSupportedPlaylistFormats() {
-    return supportedPlaylistFormats;
-  }
-
-  public void setSupportedPlaylistFormats(String supportedPlaylistFormats) {
-    this.supportedPlaylistFormats = supportedPlaylistFormats;
-  }
+  //  public String getSupportedAudioFormats() {
+  //    return supportedAudioFormats;
+  //  }
+  //
+  //  public void setSupportedAudioFormats(String supportedAudioFormats) {
+  //    this.supportedAudioFormats = supportedAudioFormats;
+  //  }
+  //
+  //  public String getSupportedPlaylistFormats() {
+  //    return supportedPlaylistFormats;
+  //  }
+  //
+  //  public void setSupportedPlaylistFormats(String supportedPlaylistFormats) {
+  //    this.supportedPlaylistFormats = supportedPlaylistFormats;
+  //  }
 
   @Override
   public int getId() {
@@ -117,6 +123,13 @@ public class AudioPlayer extends Product implements MultimediaControl {
     System.out.println("Next");
   }
 
+  /**
+   * calls parent toString() and adds Supported Audio and Playlist Formats to it for Audio Player
+   * Objects
+   *
+   * @return toString()
+   * @author Matthew Popescu
+   */
   public String toString() {
     return super.toString()
         + "\n"

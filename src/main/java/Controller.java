@@ -1,24 +1,17 @@
-import javafx.beans.InvalidationListener;
+import java.sql.*;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
-
-import javax.swing.*;
-import java.io.FileInputStream;
-import java.sql.*;
-// import java.sql.Connection;
-// import java.sql.DriverManager;
-// import java.sql.PreparedStatement;
-// import java.sql.SQLException;
-import java.util.*;
-import java.util.Date;
 
 public class Controller {
 
@@ -52,8 +45,9 @@ public class Controller {
   /**
    * Inserts added product into the PRODUCT database, and calls loadProductList().
    *
-   * @param event
-   * @throws SQLException
+   * @param event ActionEvent
+   * @throws SQLException: Exception
+   * @author Matthew Popescu
    */
   @FXML
   void btnAddProduct(ActionEvent event) throws SQLException {
@@ -63,11 +57,8 @@ public class Controller {
     item = chbItem.getValue();
 
     connectToDB();
-    //        resultSet = statement.executeQuery(query);
 
     // insert added product into database
-
-    // STEP 3: Execute a query
     final String sql = "INSERT INTO Product (type, manufacturer, name)" + "VALUES (?, ?, ?)";
 
     PreparedStatement ps = connection.prepareStatement(sql);
@@ -77,32 +68,6 @@ public class Controller {
     ps.executeUpdate();
     System.out.println("insert successful");
 
-    //        String showSql = "SELECT * FROM Product";
-
-    //        resultSet = statement.executeQuery(showSql);
-    //        while (resultSet.next()) {
-    //            tvProducts.setCellFactory(resultSet.getObject(2));
-    //        }
-
-    while (resultSet.next()) {
-      switch (item) {
-        case "Audio":
-          productLine.add(new AudioPlayer(productName, productManufacturer));
-          break;
-        case "Visual":
-          productLine.add(new MoviePlayer(productName, productManufacturer));
-          break;
-          //                case "AudioMobile":
-          //                    productLine.add(new AudioPlayer(productName, productManufacturer));
-          //                    break;
-          //                case "VisualMobile":
-          //                    productLine.add(new MoviePlayer(productName, productManufacturer));
-          //                    break;
-      } // end switch statement
-      lvChooseProduct.setItems(productLine);
-    } // end while{} statement
-
-    // call loadProducts
     loadProductList();
   } // end button
 
@@ -122,6 +87,14 @@ public class Controller {
   // Produce tab
   @FXML private Button btnRecordProduction;
 
+  /**
+   * Creates product objects from the UI and adds them to an ArrayList which is sent to
+   * addToProduction(). Lastly calls loadProductionLog and showProduction.
+   *
+   * @param event
+   * @throws SQLException: Exception
+   * @author Matthew Popescu
+   */
   @FXML
   public void btnRecordProduction(ActionEvent event) throws SQLException {
     // create sql date object for insertion into DB
@@ -133,27 +106,29 @@ public class Controller {
     ;
 
     // get product from product line listview
-    Product beingRecorded = new Product();
-    beingRecorded = lvChooseProduct.getSelectionModel().getSelectedItem();
+    Product produce = new Product();
+    produce = lvChooseProduct.getSelectionModel().getSelectedItem();
     //   and quantity from comboBox
     int quantity = Integer.parseInt(cmbQuantity.getValue());
 
     // create arrayList of ProductionRecord objects
     ArrayList<ProductionRecord> productionRun = new ArrayList<>();
-    ProductionRecord newProduct = new ProductionRecord(productID);
-    ItemType type = beingRecorded.getType();
-    String manufacturer = beingRecorded.getManufacturer();
+    ProductionRecord recordedProduce = new ProductionRecord(productID);
+    ItemType type = produce.getType();
+    String manufacturer = produce.getManufacturer();
     Date date = new Date();
     Timestamp timestamp = new Timestamp(date.getTime());
     //        java.sql.Timestamp timestamp = new java.sql.Timestamp(calendar.getTime().getTime());
     //        String name = beingRecorded.getName();
     //        int productID = b.getProductID();
     //        String serialNum = newProduct.getSerialNum();
-    productionRun.add(newProduct);
+    productionRun.add(recordedProduce);
 
     // send the productionRun to addToProductionDB method.  (Tip: use TimeStamp object for date!!!)
     //        addToProductionDB(productionRun);
     //        addToProductionDB(productionRunRecords);
+
+    addToProductionDB(productionRun);
 
     loadProductionLog();
     showProduction();
@@ -169,6 +144,12 @@ public class Controller {
   // Production Log tab
   @FXML private TextArea taProductionLog;
 
+  /**
+   * Initializes program during start-up.
+   *
+   * @throws SQLException: Exception
+   * @author Matthew Popescu
+   */
   public void initialize() throws SQLException {
     for (int count = 1; count <= 10; count++) {
       cmbQuantity.getItems().add(String.valueOf(count));
@@ -191,7 +172,7 @@ public class Controller {
 
   } // end initialize()
 
-  /** Sets items of the TableView to the ObservableList */
+  /** Sets items of the TableView to the ObservableList. */
   public void setupProductLineTable() {
     productLine = FXCollections.observableArrayList();
 
@@ -207,6 +188,8 @@ public class Controller {
   /**
    * Creates Product objects from the Product database table and adds them to the productLine
    * ObservableList (which automatically updates the Product Line ListView).
+   *
+   * @author Matthew Popescu
    */
   private void loadProductList() throws SQLException {
     connectToDB();
@@ -260,40 +243,52 @@ public class Controller {
 
   /**
    * Loop through the productionRun, inserting productionRecord object information into the
-   * ProductionRecord database table
+   * ProductionRecord database table.
    *
-   * @param productionRun
-   * @throws SQLException
+   * @param productionRun: ArrayList
+   * @throws SQLException; Exception
+   * @author Matthew Popescu
    */
   public void addToProductionDB(ArrayList<ProductionRecord> productionRun) throws SQLException {
     // STEP 3: Execute a query
     connectToDB();
 
+    ProductionRecord productionRecord = new ProductionRecord(productID);
+
     String sql =
         "INSERT INTO ProductionRecord (PRODUCTION_NUM, PRODUCT_ID, SERIAL_NUM, DATE_PRODUCED)"
             + "VALUES (?,?,?,?)";
 
-    PreparedStatement ps = connection.prepareStatement(sql);
-    for (int i = 0; i < productionRun.size(); i++) {
-      ps.setInt(1, Integer.parseInt(productionRun.get(i).toString()));
-      ps.setInt(2, Integer.parseInt(productionRun.get(productID).toString()));
-      ps.setString(3, productionRun.get(serialNum).toString());
-      ps.setDate(4, null);
-      statement.executeUpdate(sql);
-    }
+    statement.executeUpdate(sql);
+    productionRun.add(productionRecord);
+    taProductionLog.setText(productionRecord.toString());
 
-    //        for (int i = 0; i < productionRun.size(); i++){
-    //            productionRun.add(lvChooseProduct.getSelectionModel().getSelectedItem());
-    ////            productionRunRecords.add(cmbQuantity.getSelectionModel().getSelectedItem());
-    //        }
-    //        statement = connection.createStatement();
-    //        resultSet = statement.executeQuery(query);
-    //
-    //        while (resultSet.next()) {
-    //            production
-    //        } // end while
+    statement.close();
+    connection.close();
+
+    //    for (int i = 0; i < productionRun.size(); i++) {
+    //      ps.setInt(1, Integer.parseInt(productionRun.get(i).toString()));
+    //      ps.setInt(2, Integer.parseInt(productionRun.get(productID).toString()));
+    //      ps.setString(3, productionRun.get(serialNum).toString());
+    //      ps.setDate(4, null);
+    //      statement.executeUpdate(sql);
+    //    }
+
+    //            while (resultSet.next()) {
+    //              ps.setInt(1, Integer.parseInt(productionRun.get(productionNum).toString()));
+    //              ps.setInt(2, Integer.parseInt(productionRun.get(productID).toString()));
+    //              ps.setString(3, productionRun.get(serialNum).toString());
+    //              ps.setDate(4, null);
+    //              statement.executeUpdate(sql);
+    //            } // end while
   } // end addToProductionDB()
 
+  /**
+   * Creates Production Record objects from the ProductionRecord database
+   *
+   * @throws SQLException: Exception
+   * @author Matthew Popescu
+   */
   public void loadProductionLog() throws SQLException {
     connectToDB();
 
@@ -319,6 +314,12 @@ public class Controller {
     showProduction();
   } // end loadProductionLog()
 
+  /**
+   * Populates the production log TextArea with ProductionRecord objects
+   *
+   * @throws SQLException Exception
+   * @author Matthew Popescu
+   */
   public void showProduction() throws SQLException {
     connectToDB();
     // populate the TextArea on the Production Log tab with the information from the productionLog,
@@ -342,6 +343,10 @@ public class Controller {
 
   } // end showProduction()
 
+  /**
+   * Connects to the database
+   * @author Matthew Popescu
+   */
   public void connectToDB() {
     final String JDBC_DRIVER = "org.h2.Driver";
     final String DB_URL = "jdbc:h2:./res/resDB";
