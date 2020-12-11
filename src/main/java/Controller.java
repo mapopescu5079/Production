@@ -30,8 +30,16 @@ public class Controller {
     String item; // getValue() ?????
     String productManufacturer;
 
+    int productionNum;
+    int productID;
+    char serialNum;
+    Date dateProduced;
+
     public ObservableList<Product> productLine;
 //    public ArrayList<ProductionRecord> productionRun;
+//    public ArrayList<ProductionRecord> productionRunRecord;
+    public ArrayList<ProductionRecord> productionRecordsTest = new ArrayList<>();
+
 
     //Product Line tab
     @FXML
@@ -46,6 +54,12 @@ public class Controller {
     @FXML
     private Button btnAddProduct;
 
+    /**
+     * Inserts added product into the PRODUCT database,
+     * and calls loadProductList().
+     * @param event
+     * @throws SQLException
+     */
     @FXML
     void btnAddProduct(ActionEvent event) throws SQLException {
 
@@ -124,20 +138,38 @@ public class Controller {
     private Button btnRecordProduction;
 
     @FXML
-    void btnRecordProduction(ActionEvent event) {
+    public void btnRecordProduction(ActionEvent event) throws SQLException {
+        // create sql date object for insertion into DB
+        Calendar calendar = Calendar.getInstance();
+        // Timestamp for ProductionRecord object
+//        java.sql.Timestamp timestamp = new java.sql.Timestamp(calendar.getTime().getTime());
+        java.sql.Date startDate = new java.sql.Date(calendar.getTime().getTime());
+
+        ;
+
         // get product from product line listview
-        lvChooseProduct.getSelectionModel().getSelectedItem();
+        Product beingRecorded = new Product();
+        beingRecorded = lvChooseProduct.getSelectionModel().getSelectedItem();
         //   and quantity from comboBox
-        cmbQuantity.getSelectionModel().getSelectedItem(); // do I need a loop?
+        int quantity = Integer.parseInt(cmbQuantity.getValue());
 
-        // create arrayList of ProductionRecord objects  (Tip: use TimeStamp object for date!!!)
+        // create arrayList of ProductionRecord objects
         ArrayList<ProductionRecord> productionRun = new ArrayList<>();
-//        Timestamp timestamp = new Timestamp(productionRun);
-        addToProductionDB(productionRun);
-//        .contains(productionRun);
+        ProductionRecord newProduct = new ProductionRecord(productID);
+        ItemType type = beingRecorded.getType();
+        String manufacturer = beingRecorded.getManufacturer();
+        Date date = new Date();
+        Timestamp timestamp = new Timestamp(date.getTime());
+//        java.sql.Timestamp timestamp = new java.sql.Timestamp(calendar.getTime().getTime());
+//        String name = beingRecorded.getName();
+//        int productID = b.getProductID();
+//        String serialNum = newProduct.getSerialNum();
+        productionRun.add(newProduct);
 
-        // send the productionRun to addToProductionDB method
-        addToProductionDB(productionRun);
+
+        // send the productionRun to addToProductionDB method.  (Tip: use TimeStamp object for date!!!)
+//        addToProductionDB(productionRun);
+//        addToProductionDB(productionRunRecords);
 
         loadProductionLog();
         showProduction();
@@ -182,11 +214,8 @@ public class Controller {
 
     } // end initialize()
 
-    // populate product tab listView
-
     /**
-     * set up the table view with the appropriate values from the "productLine" ObservableList
-     * which is populated from the database.
+     * Sets items of the TableView to the ObservableList
      */
     public void setupProductLineTable() {
         productLine = FXCollections.observableArrayList();
@@ -199,6 +228,11 @@ public class Controller {
         tvProducts.setItems(productLine);
 //        lvChooseProduct.setItems(productLine);
     } // end setupProductLineTable()
+
+    public void setupProductionRecordsTable(){
+
+    }
+
 
      //Create Product objects from the Product database table and add them to the
      //productLine ObservableList (which will automatically update the Product Line ListView).
@@ -256,24 +290,89 @@ public class Controller {
 
     } //end loadProductList();
 
-    public void addToProductionDB(ArrayList<ProductionRecord> productionRecords){
+    /**
+     * Loop through the productionRun, inserting productionRecord object information into the ProductionRecord
+     *  database table
+     * @param productionRun
+     * @throws SQLException
+     */
+    public void addToProductionDB(ArrayList<ProductionRecord> productionRun) throws SQLException{
+        //STEP 3: Execute a query
+        connectToDB();
 
+        String sql = "INSERT INTO ProductionRecord (PRODUCTION_NUM, PRODUCT_ID, SERIAL_NUM, DATE_PRODUCED)"
+                + "VALUES (?,?,?,?)";
+
+        PreparedStatement ps = connection.prepareStatement(sql);
+        for (int i = 0; i < productionRun.size(); i++){
+            ps.setInt(1, Integer.parseInt(productionRun.get(i).toString()));
+            ps.setInt(2, Integer.parseInt(productionRun.get(productID).toString()));
+            ps.setString(3, productionRun.get(serialNum).toString());
+            ps.setDate(4, null);
+            statement.executeUpdate(sql);
+
+        }
+
+
+
+//        for (int i = 0; i < productionRun.size(); i++){
+//            productionRun.add(lvChooseProduct.getSelectionModel().getSelectedItem());
+////            productionRunRecords.add(cmbQuantity.getSelectionModel().getSelectedItem());
+//        }
+//        statement = connection.createStatement();
+//        resultSet = statement.executeQuery(query);
+//
+//        while (resultSet.next()) {
+//            production
+//        } // end while
     } // end addToProductionDB()
 
-    public void loadProductionLog(){
+    public void loadProductionLog() throws SQLException {
+        connectToDB();
+
+        ArrayList<ProductionRecord> productionRecordArrayList = new ArrayList<>();
         // create ProductionRecord objects from the
 //        productionRun = ;
         //   records in the ProductionRecord database table
+        String query = "SELECT * FROM ProductionRecord";
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery(query);
+
+        while (resultSet.next()) {
+            productionRecordArrayList.add(
+                    new ProductionRecord(
+                            resultSet.getInt("PRODUCTION_NUM"),
+                            resultSet.getInt("PRODUCT_ID"),
+                            resultSet.getString("SERIAL_NUM"),
+                            resultSet.getDate("DATE_PRODUCED")));
+        } // end while loop
 
         // populate the productionLob ArrayList
 
         showProduction();
     } // end loadProductionLog()
 
-    public void showProduction(){
+    public void showProduction() throws SQLException{
+        connectToDB();
         // populate the TextArea on the Production Log tab with the information from the productionLog,
         //    replacing the productId with the product name, with one line for each product produced
 //        taProductionLog.setText();
+        String productionLog;
+        String query = "SELECT * FROM ProductionRecord";
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery(query);
+
+//        while (resultSet.next()) {
+//            productionRecordsTest.get(
+//                            resultSet.getInt("PRODUCTION_NUM"),
+//                            resultSet.getInt("PRODUCT_ID"),
+//                            resultSet.getString("SERIAL_NUM"),
+//                            resultSet.getDate("DATE_PRODUCED"));
+//            taProductionLog.setText(String.valueOf(productionRecordsTest));
+//            taProductionLog.set;
+//        } // end while loop
+//        taProductionLog.setAccessibleText(lo);
+
     } // end showProduction()
 
     public void connectToDB() {
@@ -296,23 +395,11 @@ public class Controller {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    } // end connectToDB2()
+    } // end connectToDB()
 
-//    public static void printSQLException(SQLException ex) {
-//        for (Throwable e: ex) {
-//            if (e instanceof SQLException) {
-//                e.printStackTrace(System.err);
-//                System.err.println("SQLState: " + ((SQLException) e).getSQLState());
-//                System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
-//                System.err.println("Message: " + e.getMessage());
-//                Throwable t = ex.getCause();
-//                while (t != null) {
-//                    System.out.println("Cause: " + t);
-//                    t = t.getCause();
-//                }
-//            }
-//        }
-//    }
+
+
+
 
 //    public void connectToDbOld(){
 //        final String JDBC_DRIVER = "org.h2.Driver";

@@ -24,18 +24,11 @@ public class ProductionRecord {
 //        itemCount = itemCount;
         this.dateProduced = new Date();
         String padded = String.format("%05d", itemCount);
-        serialNumber = newProduct.manufacturer.substring(0,3)
-        + newProduct.type.toString().substring(0,2)
+        serialNumber = newProduct.getManufacturer().substring(0,3)
+        + newProduct.getType().toString().substring(0,2)
         + padded;
 
-
-//        ArrayList<ProductionRecord> list = new ArrayList<ProductionRecord>();
-//        // first three letters of the Manufacturer name, then the two letter ItemType code,
-//        // then five digits (with leading 0s if necessary)
-//        list.add(new ProductionRecord(newProduct, 1));
-//        list.add(new Product(1, "Mountain Dew", 2.00));
-////        list.add(new Product(2, "Mango Smoothie", 4.50));
-
+        this.dateProduced = new Date();
     } // end overloaded constructor
 
     // used when creating ProductionRecord objects from the database
@@ -47,7 +40,7 @@ public class ProductionRecord {
 
 
         //Product productProduced;
-        //Product itemCount;
+        int itemCount;
         // countAU, countVI, countAUM, countVIM
         int countOfItems;
 

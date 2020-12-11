@@ -59,30 +59,3 @@ public class Product implements Item {
     } // end toString()
 
 } // end Product
-
-class Widget extends Product {
-
-    Widget(String name, String manufacturer, ItemType type) {
-        super(name, manufacturer, type);
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public void setName(String name) {
-        this.name=name;
-    }
-
-    @Override
-    public String getManufacturer() {
-        return manufacturer;
-    }
-
-    @Override
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer=manufacturer;
-    }
-}
