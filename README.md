@@ -1,12 +1,9 @@
 # Production
 
-This JavaFX project allows users to add created products into a database for production. <br />
-Once products have been created by the user they are entered into a production log available<br />
- to the user. This was an individual project in which I received occasional help and <br />
-guidance from the instructor or student assistants. I created this project as an assignment<br />
- during the first semester of my junior year at Florida Gulf Coase University. Through it <br />
-and other courses this semester, my knowledge and proficiency has greatly increased.
-
+This JavaFX project allows users to add created products into a database for production. Once products have been created by the user <br />
+they are entered into a production log available to the user. This was an individual project in which I received occasional help and <br />
+guidance from the instructor or student assistants. I created this project as an assignment during the first semester of my junior year <br />
+at Florida Gulf Coase University. Through it and other courses this semester, my knowledge and proficiency has greatly increased.
 
 ## Demonstration
 
