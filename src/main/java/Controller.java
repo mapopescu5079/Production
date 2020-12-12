@@ -129,7 +129,6 @@ public class Controller {
     tvProducts.setItems(productLine);
     loadProductList();
     loadProductionLog();
-
   } // end initialize()
 
   /** Sets items of the TableView to the ObservableList. */
@@ -151,8 +150,6 @@ public class Controller {
    * @author Matthew Popescu
    */
   private void loadProductList() throws SQLException {
-    connectToDB();
-
     lvChooseProduct.setItems(productLine);
 
     String query = "SELECT * FROM Product";
@@ -234,8 +231,6 @@ public class Controller {
    * @author Matthew Popescu
    */
   public void loadProductionLog() throws SQLException {
-    connectToDB();
-
     String query = "SELECT * FROM ProductionRecord";
     statement = connection.createStatement();
     resultSet = statement.executeQuery(query);
@@ -285,8 +280,6 @@ public class Controller {
       System.out.println("Connection Successful");
     } catch (ClassNotFoundException | SQLException e) {
       e.printStackTrace();
-
     }
   } // end connectToDB()
-
 } // end Controller
