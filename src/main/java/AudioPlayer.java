@@ -5,8 +5,8 @@
  */
 public class AudioPlayer extends Product implements MultimediaControl {
 
-  String supportedAudioFormats;
-  String supportedPlaylistFormats;
+  private String supportedAudioFormats;
+  private String supportedPlaylistFormats;
   //    String name;
   //    String manufacturer;
 
@@ -47,21 +47,21 @@ public class AudioPlayer extends Product implements MultimediaControl {
     this.supportedPlaylistFormats = supportedPlaylistFormats;
   }
 
-  //  public String getSupportedAudioFormats() {
-  //    return supportedAudioFormats;
-  //  }
-  //
-  //  public void setSupportedAudioFormats(String supportedAudioFormats) {
-  //    this.supportedAudioFormats = supportedAudioFormats;
-  //  }
-  //
-  //  public String getSupportedPlaylistFormats() {
-  //    return supportedPlaylistFormats;
-  //  }
-  //
-  //  public void setSupportedPlaylistFormats(String supportedPlaylistFormats) {
-  //    this.supportedPlaylistFormats = supportedPlaylistFormats;
-  //  }
+    public String getSupportedAudioFormats() {
+      return supportedAudioFormats;
+    }
+
+    public void setSupportedAudioFormats(String supportedAudioFormats) {
+      this.supportedAudioFormats = supportedAudioFormats;
+    }
+
+    public String getSupportedPlaylistFormats() {
+      return supportedPlaylistFormats;
+    }
+
+    public void setSupportedPlaylistFormats(String supportedPlaylistFormats) {
+      this.supportedPlaylistFormats = supportedPlaylistFormats;
+    }
 
   @Override
   public int getId() {

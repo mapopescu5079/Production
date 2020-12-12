@@ -1,7 +1,7 @@
 public class MoviePlayer extends Product implements MultimediaControl {
 
-  Screen screen;
-  MonitorType monitorType;
+  private Screen screen;
+  private MonitorType monitorType;
 
   //  /**
   //   * Called when user inserts product into database using the UI.

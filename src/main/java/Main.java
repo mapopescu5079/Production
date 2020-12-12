@@ -11,7 +11,7 @@ public class Main extends Application {
     Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
     Scene scene = new Scene(root);
 
-    primaryStage.setTitle("The election was totally rigged");
+    primaryStage.setTitle("Production Line");
     primaryStage.setScene(scene);
     scene.getStylesheets().add(getClass().getResource("styling.css").toExternalForm());
     primaryStage.show();

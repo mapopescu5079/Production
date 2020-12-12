@@ -1,6 +1,3 @@
-import java.time.LocalDate;
-import java.time.MonthDay;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class ProductionRecord {
