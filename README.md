@@ -10,10 +10,9 @@ and other courses this semester, my knowledge and proficiency has greatly increa
 
 ## Demonstration
 
+![Production](xmn7pomb59.gif) 
+or
 https://i.imgur.com/aIe8mlv.gif
-![Production](ShareX-13.3.0-setup.exe)
-![Production](ShareX-13.3.0-setup.gif)
-
 ## Documentation
 
 Create a docs folder in your project. If using Java, generate JavaDoc in your IDE. If using C++, use Doxygen. Change repository settings (using Settings at top of page) to use GitHub Pages with your docs folder. Add a link to the javadoc/doxygen index.html file with this markdown: \[Text to appear]\(URL) <br />
@@ -24,7 +23,7 @@ Sample: \[JavaDoc]\(https://pv-cop.github.io/PV-README-TEMPLATE/javadoc/index.ht
 
 ## Diagrams
 
-![Production Diagram](umlProduction.JPG)
+![Class Diagram](umlProduction.JPG)
 
 ## Getting Started
 
