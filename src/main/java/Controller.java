@@ -39,8 +39,6 @@ public class Controller {
     String productManufacturer = tfManufacturer.getText();
     ItemType item = chbItem.getSelectionModel().getSelectedItem();
 
-    connectToDB();
-
     // insert added product into database
     final String sql = "INSERT INTO Product (type, manufacturer, name)" + "VALUES (?, ?, ?)";
 
@@ -82,7 +80,7 @@ public class Controller {
   public void btnRecordProduction(ActionEvent event) throws SQLException {
 
     // get product from product line listview
-    Product produce = new Product();
+    Product produce;
     produce = lvChooseProduct.getSelectionModel().getSelectedItem();
     //   and quantity from comboBox
     int quantity = Integer.parseInt(cmbQuantity.getValue());
