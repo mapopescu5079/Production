@@ -12,6 +12,7 @@ and other courses this semester, my knowledge and proficiency has greatly increa
 
 https://i.imgur.com/aIe8mlv.gif
 ![Production](ShareX-13.3.0-setup.exe)
+![Production](ShareX-13.3.0-setup.gif)
 
 ## Documentation
 
@@ -23,9 +24,7 @@ Sample: \[JavaDoc]\(https://pv-cop.github.io/PV-README-TEMPLATE/javadoc/index.ht
 
 ## Diagrams
 
-Such as a class diagram. <br /> 
-The markdown is  \!\[Production Diagram\]\(umlProduction.JPG) <br />
- ![Sample Image](docs/9919.png)
+![Production Diagram](umlProduction.JPG)
 
 ## Getting Started
 
