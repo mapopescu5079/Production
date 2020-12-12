@@ -24,7 +24,7 @@ Sample: \[JavaDoc]\(https://pv-cop.github.io/PV-README-TEMPLATE/javadoc/index.ht
 ## Diagrams
 
 Such as a class diagram. <br /> 
-The markdown is  \!\[Production Diagram\]\(umlProduction.jpg) <br />
+The markdown is  \!\[Production Diagram\]\(umlProduction.JPG) <br />
  ![Sample Image](docs/9919.png)
 
 ## Getting Started
