@@ -22,25 +22,11 @@ Sample: \[JavaDoc]\(https://pv-cop.github.io/PV-README-TEMPLATE/javadoc/index.ht
 
 ![Class Diagram](umlProduction.JPG)
 
-## Getting Started
-
-Instructions to get a copy of the project up and running on someone's local machine for development and testing purposes.
-<br />
-Note for real project: You want to be able to share your project and enable collaboration. 
-<br />
-Note for school project: You want a potential client or hirer to be able to run your program. 
-
 ## Built With
 
 * IntelliJ IDEA 2020.2
 * Gradle  
 * Resources used: Oracle, Visual Paradigm (uml diagram) 
-
-## Contributing
-
-This section is more important for real projects but is good to include in school projects. <br />
-One of the main purposes of GitHub and similar services is to provide a means for project collaboration. <br />
-Tell someone how they can contribute to this project.
 
 ## Author
 
@@ -48,16 +34,7 @@ Tell someone how they can contribute to this project.
 
 ## License
 
-Public repositories on GitHub are often used to share open source software. For your repository to truly be open source, you'll need to license it so that others are free to use, change, and distribute the software. https://help.github.com/articles/licensing-a-repository/ <br />
-You have the option to choose a license when you first create your repository. </br>
-If you need to create a license for an existing repository...
-1. Go to your repository.
-2. Click on "Create new file" Button.
-3. Type the file name as License.txt or License.md in the input box next to your repository name, a drop down button appears towards right side.
-4. Choose the type of license of your choice.
-5. Click "Commit new file" button at the bottom (Green button)
-Credit https://stackoverflow.com/questions/31639059/how-to-add-license-to-an-existing-github-project <br />
-To choose a license, see https://choosealicense.com/ 
+Apache-2.0 License
 
 ## Acknowledgments
 
@@ -65,11 +42,3 @@ To choose a license, see https://choosealicense.com/
 * Professor Scott Vanselow
 * SA/TA Andrew Cavallaro
 * SA/TA Sean Lamont
-
-## History
-
-Information about what has changed. 
-
-## Key Programming Concepts Utilized
-
-Object-Oriented approach,  
